@@ -1,19 +1,26 @@
 {
-  "name": "websocket",
+  "name": "websocket-gateway",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Websocket Gateway",
+  "type": "module",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc && node dist/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "axios": "^1.9.0",
     "express": "^5.1.0",
     "uuid": "^11.1.0",
     "ws": "^8.18.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.6",
+    "ts-node-dev": "^2.0.0",
+    "@types/express": "^4.17.17",
+    "@types/ws": "^8.5.4",
+    "@types/uuid": "^9.0.2"
   }
 }
