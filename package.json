@@ -2,7 +2,7 @@
   "name": "websocket-gateway",
   "version": "1.0.0",
   "description": "Websocket Gateway",
-  "type": "module",
+  "type": "commonjs",
   "main": "dist/index.js",
   "scripts": {
     "start": "tsc && node dist/index.js"
