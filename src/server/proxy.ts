@@ -1,14 +1,24 @@
 import axios from 'axios';
-import { ProxyData, PROXY_ENDPOINT_RECORD } from '../types';
+import {AnyObject, PROXY_OPTION_RECORD} from '../types';
 
-export async function proxy(data: ProxyData, token: string) {
-    const path = PROXY_ENDPOINT_RECORD[data.action];
+export async function proxy(data: AnyObject, token: string) {
+    const option = PROXY_OPTION_RECORD[data.action];
 
-    if (!path) {
+    if (!option) {
         throw new Error('Invalid action');
     }
 
-    const url = `http://localhost:8080/${path}`;
+    const {method, path} = option;
 
-    return axios.post(url, data, { headers: { Authorization: token } });
+    let url = 'http://localhost:8080/';
+
+    if (path.includes('/:')) {
+        url += path.replace(/:([^/]+)/g, (_, key) => {
+            return data[key];
+        });
+    } else {
+        url += path;
+    }
+
+    return axios.request({method, url, data, headers: { Authorization: token } });
 }
