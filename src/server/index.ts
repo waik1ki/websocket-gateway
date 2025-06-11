@@ -26,14 +26,22 @@ export function createServer(): HttpServer {
             console.log('[ONMESSAGE]', msg.toString());
 
             const data = JSON.parse(msg.toString());
-            await proxy({ ...data, connectionId }, token);
+            try {
+                await proxy({ ...data, connectionId }, token);
+            } catch (e) {
+                console.log("[ONMESSAGE PROXY ERROR] : ", e);
+            }
         });
 
         ws.on('close', async () => {
             console.log('[DISCONNECT]', connectionId);
-
-            await proxy({ action: 'disconnect', connectionId }, token);
             connectionManager.remove(connectionId);
+
+            try {
+                await proxy({ action: 'disconnect', connectionId }, token);
+            } catch (e) {
+                console.log("[DISCONNECT PROXY ERROR] : ", e);
+            }
         });
     });
 
